@@ -10,4 +10,5 @@ func SetupRoutes(app *fiber.App) {
 
 	dayoffRoutes := api.Group("/dayoff")
 	dayoffRoutes.Get("/", handler.GetDayOffs)
+	dayoffRoutes.Post("/", handler.CreateDayOff)
 }
