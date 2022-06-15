@@ -7,7 +7,10 @@ import (
 )
 
 func GetDayOffs(c *fiber.Ctx) error {
-	return c.SendString("Hello, World!")
+	var dayOffs []model.DayOff
+	db := database.DBConn
+	db.Find(&dayOffs)
+	return c.JSON(dayOffs)
 }
 
 func CreateDayOff(c *fiber.Ctx) error {

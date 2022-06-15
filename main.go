@@ -1,6 +1,8 @@
 package main
 
 import (
+	"os"
+
 	"github.com/gofiber/fiber/v2"
 	"github.com/gofiber/fiber/v2/middleware/logger"
 	"github.com/joaovicdsantos/dayoffreminder/database"
@@ -15,5 +17,5 @@ func main() {
 	router.SetupRoutes(app)
 	database.InitDatabase()
 
-	app.Listen(":3000")
+	app.Listen(":" + os.Getenv("PORT"))
 }
