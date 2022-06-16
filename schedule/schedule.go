@@ -19,14 +19,16 @@ func main() {
 	var dayOffs []model.DayOff
 	db.Order("initial_date").Where("(initial_date::date - current_date in (14, 9, 6, 4, 2, 0) or initial_date::date < current_date) and final_date::date > current_date").Find(&dayOffs)
 
-	message := MountSlackMessage(dayOffs)
+	if len(dayOffs) > 0 {
+		message := MountSlackMessage(dayOffs)
 
-	var jsonStr = []byte(fmt.Sprintf(`{"text": "%s"}`, message))
-	req, _ := http.NewRequest("POST", os.Getenv("SLACK_URL"), bytes.NewBuffer(jsonStr))
-	req.Header.Set("Content-Type", "application/json")
+		var jsonStr = []byte(fmt.Sprintf(`{"text": "%s"}`, message))
+		req, _ := http.NewRequest("POST", os.Getenv("SLACK_URL"), bytes.NewBuffer(jsonStr))
+		req.Header.Set("Content-Type", "application/json")
 
-	client := &http.Client{}
-	client.Do(req)
+		client := &http.Client{}
+		client.Do(req)
+	}
 }
 
 func MountSlackMessage(dayOffs []model.DayOff) string {
