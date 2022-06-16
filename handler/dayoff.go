@@ -19,7 +19,7 @@ func CreateDayOff(c *fiber.Ctx) error {
 	var dayOff model.DayOff
 	db := database.DBConn
 
-	log.Print(c.Query("text"))
+	log.Print(c.Request().URI().QueryString())
 	if err := dayOff.QueryToDayOff(c.Query("text"), c.Query("user_name")); err != nil {
 		log.Print(err.Error())
 		c.JSON(fiber.Map{
