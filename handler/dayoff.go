@@ -1,6 +1,8 @@
 package handler
 
 import (
+	"fmt"
+
 	"github.com/gofiber/fiber/v2"
 	"github.com/joaovicdsantos/dayoffreminder/database"
 	"github.com/joaovicdsantos/dayoffreminder/model"
@@ -21,6 +23,7 @@ func CreateDayOff(c *fiber.Ctx) error {
 		c.JSON(fiber.Map{
 			"message": err.Error(),
 		})
+		fmt.Print(err.Error())
 		return c.SendStatus(400)
 	}
 
