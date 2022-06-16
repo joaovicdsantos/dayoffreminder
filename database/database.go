@@ -26,7 +26,7 @@ func InitDatabase() {
 	loadConfig()
 
 	dsn := fmt.Sprintf(
-		"host=%s user=%s password=%s dbname=%s port=%s sslmode=disable TimeZone=America/Recife",
+		"host=%s user=%s password=%s dbname=%s port=%s sslmode=require TimeZone=America/Recife",
 		dbHost, dbUser, dbPass, dbBase, dbPort,
 	)
 	DBConn, err = gorm.Open(postgres.Open(dsn), &gorm.Config{})
