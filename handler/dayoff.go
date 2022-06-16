@@ -1,7 +1,7 @@
 package handler
 
 import (
-	"fmt"
+	"log"
 
 	"github.com/gofiber/fiber/v2"
 	"github.com/joaovicdsantos/dayoffreminder/database"
@@ -19,11 +19,12 @@ func CreateDayOff(c *fiber.Ctx) error {
 	var dayOff model.DayOff
 	db := database.DBConn
 
+	log.Print(c.Query("text"))
 	if err := dayOff.QueryToDayOff(c.Query("text"), c.Query("user_name")); err != nil {
+		log.Print(err.Error())
 		c.JSON(fiber.Map{
 			"message": err.Error(),
 		})
-		fmt.Print(err.Error())
 		return c.SendStatus(400)
 	}
 
