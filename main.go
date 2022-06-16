@@ -16,6 +16,7 @@ func main() {
 
 	router.SetupRoutes(app)
 	database.InitDatabase()
+	database.Migrate()
 
 	app.Listen(":" + os.Getenv("PORT"))
 }

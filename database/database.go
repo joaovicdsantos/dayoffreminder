@@ -34,6 +34,9 @@ func InitDatabase() {
 		log.Fatal("Failed to Connect Database")
 	}
 	fmt.Println("Connection Opened to Database")
+}
+
+func Migrate() {
 	DBConn.AutoMigrate(&model.DayOff{})
 	fmt.Println("Migrated")
 }

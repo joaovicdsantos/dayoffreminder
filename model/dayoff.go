@@ -39,8 +39,8 @@ func (do *DayOff) QueryToDayOff(text, teamMember string) error {
 		dates = append(dates, date)
 	}
 
-	if dates[0].After(dates[1]) {
-		return fmt.Errorf("start date greater than end date")
+	if dates[0].Before(time.Now()) || dates[0].After(dates[1]) {
+		return fmt.Errorf("start date greater than end date or current date greater than start date")
 	}
 
 	*do = DayOff{
