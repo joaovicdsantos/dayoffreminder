@@ -23,7 +23,10 @@ func (do *DayOff) BeforeCreate(tx *gorm.DB) (err error) {
 	return
 }
 
-func (do *DayOff) QueryToDayOff(text, teamMember string) error {
+func (do *DayOff) SlackRequestToDayOff(slackRequest SlackRequest) error {
+	text := slackRequest.Text
+	teamMember := slackRequest.UserName
+
 	match, _ := regexp.MatchString("^[0-9]{2}-[0-9]{2}-[0-9]{4} [0-9]{2}-[0-9]{2}-[0-9]{4}$", text)
 	if !match {
 		return fmt.Errorf("invalid format! DD-MM-YYYY DD-MM-YYYY")
