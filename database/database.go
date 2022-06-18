@@ -33,12 +33,12 @@ func InitDatabase() {
 	if err != nil {
 		log.Fatal("Failed to Connect Database")
 	}
-	fmt.Println("Connection Opened to Database")
+	log.Println("Connection Opened to Database")
 }
 
 func Migrate() {
 	DBConn.AutoMigrate(&model.DayOff{})
-	fmt.Println("Migrated")
+	log.Println("Migrated")
 }
 
 func loadConfig() {

@@ -1,6 +1,7 @@
 package main
 
 import (
+	"log"
 	"os"
 
 	"github.com/gofiber/fiber/v2"
@@ -18,5 +19,6 @@ func main() {
 	database.InitDatabase()
 	database.Migrate()
 
+	log.Printf("Running the server on the port %s\n", os.Getenv("PORT"))
 	app.Listen(":" + os.Getenv("PORT"))
 }

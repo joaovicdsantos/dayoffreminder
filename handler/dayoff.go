@@ -1,6 +1,8 @@
 package handler
 
 import (
+	"log"
+
 	"github.com/gofiber/fiber/v2"
 	"github.com/joaovicdsantos/dayoffreminder/database"
 	"github.com/joaovicdsantos/dayoffreminder/model"
@@ -19,6 +21,7 @@ func CreateDayOff(c *fiber.Ctx) error {
 	db := database.DBConn
 
 	if err := c.BodyParser(&slackRequest); err != nil {
+		log.Println(err.Error())
 		return c.JSON(fiber.Map{
 			"response_type": "ephemeral",
 			"text":          err.Error(),
@@ -26,6 +29,7 @@ func CreateDayOff(c *fiber.Ctx) error {
 	}
 
 	if err := dayOff.SlackRequestToDayOff(slackRequest); err != nil {
+		log.Println(err.Error())
 		return c.JSON(fiber.Map{
 			"response_type": "ephemeral",
 			"text":          err.Error(),
