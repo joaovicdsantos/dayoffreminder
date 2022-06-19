@@ -2,6 +2,7 @@ package database
 
 import (
 	"fmt"
+	"io/ioutil"
 	"log"
 	"os"
 
@@ -26,7 +27,7 @@ func InitDatabase() {
 	loadConfig()
 
 	dsn := fmt.Sprintf(
-		"host=%s user=%s password=%s dbname=%s port=%s sslmode=require TimeZone=America/Recife",
+		"host=%s user=%s password=%s dbname=%s port=%s sslmode=require",
 		dbHost, dbUser, dbPass, dbBase, dbPort,
 	)
 	DBConn, err = gorm.Open(postgres.Open(dsn), &gorm.Config{})
@@ -37,6 +38,7 @@ func InitDatabase() {
 }
 
 func Migrate() {
+	loadSQLFiles()
 	DBConn.AutoMigrate(&model.DayOff{})
 	log.Println("Migrated")
 }
@@ -48,4 +50,32 @@ func loadConfig() {
 	dbBase = os.Getenv("DB_BASE")
 	dbUser = os.Getenv("DB_USER")
 	dbPass = os.Getenv("DB_PASS")
+}
+
+func loadSQLFiles() {
+	files := loadMigrationFiles()
+	for _, file := range files {
+		sql, err := ioutil.ReadFile(file)
+		if err != nil {
+			log.Fatal(err)
+		}
+		DBConn.Exec(string(sql))
+	}
+}
+
+func loadMigrationFiles() []string {
+	currentDirectory, _ := os.Getwd()
+	filePath := fmt.Sprintf("%s/database/migrations/", currentDirectory)
+
+	files, err := ioutil.ReadDir(filePath)
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	var formatedFiles []string
+	for _, file := range files {
+		formatedFiles = append(formatedFiles, fmt.Sprintf("%s/%s", filePath, file.Name()))
+	}
+
+	return formatedFiles
 }
