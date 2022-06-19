@@ -27,7 +27,7 @@ func InitDatabase() {
 	loadConfig()
 
 	dsn := fmt.Sprintf(
-		"host=%s user=%s password=%s dbname=%s port=%s sslmode=require",
+		"host=%s user=%s password=%s dbname=%s port=%s sslmode=require Timezone=America/Recife",
 		dbHost, dbUser, dbPass, dbBase, dbPort,
 	)
 	DBConn, err = gorm.Open(postgres.Open(dsn), &gorm.Config{})
@@ -38,8 +38,8 @@ func InitDatabase() {
 }
 
 func Migrate() {
-	loadSQLFiles()
 	DBConn.AutoMigrate(&model.DayOff{})
+	loadSQLFiles()
 	log.Println("Migrated")
 }
 

@@ -12,10 +12,11 @@ import (
 )
 
 type DayOff struct {
-	Id          string    `json:"id" gorm:"not null"`
-	InitialDate time.Time `json:"initial_date" gorm:"not null"`
-	FinalDate   time.Time `json:"final_date" gorm:"not null"`
-	TeamMember  string    `json:"team_member" gorm:"not null"`
+	Id           string    `json:"id" gorm:"not null"`
+	InitialDate  time.Time `json:"initial_date" gorm:"not null"`
+	FinalDate    time.Time `json:"final_date" gorm:"not null"`
+	TeamMember   string    `json:"team_member" gorm:"not null"`
+	TeamMemberId string    `json:"team_member_id" gorm:"not null"`
 }
 
 func (do *DayOff) BeforeCreate(tx *gorm.DB) (err error) {
@@ -26,6 +27,7 @@ func (do *DayOff) BeforeCreate(tx *gorm.DB) (err error) {
 func (do *DayOff) SlackRequestToDayOff(slackRequest SlackRequest) error {
 	text := slackRequest.Text
 	teamMember := slackRequest.UserName
+	teamMemberId := slackRequest.UserId
 
 	match, _ := regexp.MatchString("^[0-9]{2}-[0-9]{2}-[0-9]{4} [0-9]{2}-[0-9]{2}-[0-9]{4}$", text)
 	if !match {
@@ -47,9 +49,10 @@ func (do *DayOff) SlackRequestToDayOff(slackRequest SlackRequest) error {
 	}
 
 	*do = DayOff{
-		InitialDate: dates[0],
-		FinalDate:   dates[1],
-		TeamMember:  teamMember,
+		InitialDate:  dates[0],
+		FinalDate:    dates[1],
+		TeamMember:   teamMember,
+		TeamMemberId: teamMemberId,
 	}
 
 	return nil

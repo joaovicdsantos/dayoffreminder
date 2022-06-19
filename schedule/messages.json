@@ -1,0 +1,30 @@
+{
+    "going_out": {
+        "normal": [
+            "<teamMember> estará fora em *<daysSinceLeaving> dia(s)* e voltará dia `<finalDate>`."
+        ],
+        "today": [
+            "Um minuto de silêncio para <teamMember> que se vai hoje, mas volta dia. `<finalDate>`",
+            "Não!! por favor, não nos deixe, <teamMember>, precisamos de você. `<finalDate>`"
+        ],
+        "week": [
+            "Aproveita que <teamMember> vai descansar logo logo! `<initialDate>`",
+            "Parece que <teamMember> vai dar uma descansada. Ele merece! `<initialDate>`"
+        ]
+    },
+    "get_in": {
+        "normal": [
+            "<teamMember> está fora e voltará dia `<finalDate>`"
+        ],
+        "today": [
+            "Os deuses ouviram nossas preces <teamMember> está de volta!",
+            "É um pássaro? É um avião? Não, é <teamMember> que acabou de chegar!",
+            "Já faz 84 anos... O que?? <teamMember> voltou? Aeeeh!"
+        ],
+        "week": [
+            "Parece que a chegada de <teamMember> está próxima! <finalDate>",
+            "Que rufem os tambores pois <teamMember> está para chegar! <finalDate>",
+            "<teamMember> não está longe, eu consigo sentir o seu Ki... <finalDate>"
+        ]
+    }
+}
